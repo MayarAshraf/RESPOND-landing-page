@@ -11,8 +11,8 @@ import { ButtonModule } from 'primeng/button';
       <div class="container">
         <div class="hero-content fade-in-up">
           <h1 class="hero-title">
-            Customers message. Teams juggle. Conversations slip. Can you manage
-            it all?
+            Customers message. Teams handle replies. Conversations get messy.
+            Can you manage it all?
           </h1>
           <p class="hero-description">
             Manage WhatsApp conversations, automate replies, route customers to
