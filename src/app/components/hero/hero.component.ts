@@ -152,7 +152,7 @@ import { ButtonModule } from 'primeng/button';
 
       @media (max-width: 768px) {
         .hero-title {
-          font-size: 2.5rem;
+          font-size: 2rem;
         }
 
         .hero-subtitle {
