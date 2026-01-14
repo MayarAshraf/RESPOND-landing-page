@@ -12,7 +12,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
             <img src="assets/images/branch.svg" />
           </div>
           <div class="content text-center text-white">
-            <h3>Smart Chat Flow Builder</h3>
+            <h2 class="m-0 text-4xl font-medium">Smart Chat Flow Builder</h2>
             <p class="text-2xl">
               Create custom automation rules that control how conversations are
               routed and assigned, Matching how your team actually works.

@@ -12,7 +12,7 @@ import { CardModule } from 'primeng/card';
         <div class="grid align-items-center">
           <div class="col-12 md:col-6">
             <div class="flex flex-column gap-3">
-              <h2 class="m-0 text-5xl font-medium">About 8X RESPOND</h2>
+              <h2 class="m-0 text-4xl font-medium">About 8X RESPOND</h2>
               <p class="m-0 subtitle">
                 Built for structured team conversations.
               </p>
