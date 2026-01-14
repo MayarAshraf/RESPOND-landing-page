@@ -1,0 +1,20 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: white;
+  backdrop-filter: blur(10px);
+  border-bottom: solid 1px #ecf0f1;
+  transition: all 0.3s ease;
+  padding-block: 0.65rem;
+}
+
+:host ::ng-deep {
+  .home-btn {
+    &:hover {
+      color: #3475d4;
+    }
+  }
+}

@@ -1,0 +1,84 @@
+:host ::ng-deep {
+  .p-accordion.faqs-accordion {
+    .p-accordionpanel {
+      border: none;
+
+      &:hover {
+        .p-accordionheader {
+          color: #3475d4;
+          background-color: #f5f5f5;
+        }
+      }
+
+      &.p-accordionpanel-active {
+        .p-accordionheader {
+          border-end-start-radius: 0;
+          border-end-end-radius: 0;
+        }
+
+        .p-accordioncontent > .p-accordioncontent-content {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    .p-accordionheader {
+      border: 1px solid #ddd !important;
+      padding: 10px;
+      border-radius: 4px;
+      background-color: #f5f5f5;
+      font-weight: 600;
+    }
+
+    .p-accordioncontent-content {
+      border: 1px solid #ddd !important;
+      border-top: none !important;
+      border-radius: 0 0 4px 4px;
+      padding: 10px 20px !important;
+      line-height: 1.72222;
+      font-size: 18px;
+    }
+  }
+  .p-inputtext,
+  .p-textarea {
+    background-color: #f5f5f5;
+    height: 53px;
+    padding: 10px 16px;
+    font-size: 22px;
+    line-height: 1.318;
+    border-radius: 6px;
+    color: #b2bcc5;
+  }
+}
+
+.contact {
+  color: #34495e;
+  padding: 18px 45px 14px 30px;
+  text-shadow: none;
+  background-color: #f9f8f3;
+  border: 2px solid #ebece8;
+  font-size: 16px;
+  border-radius: 6px;
+
+  p {
+    color: #95a5a6;
+  }
+}
+
+.btn-primary {
+  background: #3475d4;
+  border: none;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+  background: #2d67beff;
+  border: none;
+  color: white;
+}

@@ -1,0 +1,49 @@
+.policy {
+  padding-top: 120px;
+  padding-bottom: 50px;
+  p,
+  h2,
+  h3 {
+    margin: 0;
+  }
+  p {
+    line-height: 26px;
+  }
+  h2 {
+    padding-bottom: 10px;
+    color: var(--dark-900);
+    font-size: 1.8rem;
+  }
+  h3 {
+    color: var(--dark-900);
+    font-size: 1.3rem;
+    font-family: "Kanit", sans-serif;
+  }
+  .hr {
+    background: rgba(0, 0, 0, 0.06);
+    border: 0;
+    height: 1px;
+    margin: 22px 0;
+  }
+  .intro {
+    .list {
+      li {
+        color: var(--main-color);
+      }
+    }
+  }
+  .collected-info {
+    .worx {
+      color: var(--main-color);
+    }
+  }
+  .info-usage {
+    .list {
+      list-style: circle;
+      padding: 0 0 0 40px;
+      li:not(:first-child) {
+        padding-top: 10px;
+      }
+    }
+  }
+}

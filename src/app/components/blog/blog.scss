@@ -1,0 +1,34 @@
+.border {
+  border-color: #eee;
+}
+.blog-image {
+  transition: transform 0.2s ease;
+  &:hover {
+    transform: scale(0.9);
+  }
+}
+
+.bg-color {
+  background-color: #ebedef;
+}
+
+.text-color {
+  color: #7b8996 !important;
+}
+
+.btn-primary {
+  background: #3475d4;
+  border: none;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-primary:hover {
+  background: #2d67beff !important;
+  color: white;
+}
