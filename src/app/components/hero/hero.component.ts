@@ -84,7 +84,7 @@ import { ButtonModule } from 'primeng/button';
 
       .btn-secondary {
         background: #ffffff;
-        border: 2px solid #3475d4;
+        border: 1px solid #3475d4;
         color: #3475d4;
         padding: 16px 24px;
         border-radius: 6px;
@@ -96,7 +96,7 @@ import { ButtonModule } from 'primeng/button';
 
       .btn-secondary:hover {
         border: 2px solid #3475d4;
-        background: #3475d4;
+        background: #3475d4 !important;
         color: #ffffff;
       }
 

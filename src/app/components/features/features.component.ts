@@ -40,7 +40,6 @@ import { CardModule } from 'primeng/card';
       }
 
       .feature-box {
-        border-radius: 12px;
         background: white;
         padding: 20px;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -56,7 +55,9 @@ import { CardModule } from 'primeng/card';
         align-items: center;
         height: 60px;
         width: 60px;
-        border-radius: 12px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3475d4 0%, #5b9aef 100%);
+        box-shadow: 0 4px 15px rgba(52, 117, 212, 0.3);
 
         img {
           width: 60%;

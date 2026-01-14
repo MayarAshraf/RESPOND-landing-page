@@ -73,16 +73,24 @@ import { CardModule } from 'primeng/card';
   styles: [
     `
       .bg-main {
-        background-color: #a1a0a0ff;
+        background-color: #8a898f;
       }
       .bg-main-400 {
-        background-color: #8d8d8dff;
+        background-color: #7e7e83;
       }
       .bg-pro {
         background-color: #3475d4;
       }
       .bg-pro-400 {
         background-color: #2d67beff;
+      }
+
+      .pricing {
+        background: #f8f9fa;
+      }
+
+      .card {
+        box-shadow: 0 4px 20px rgba(52, 117, 212, 0.08);
       }
 
       .pricing-header {
