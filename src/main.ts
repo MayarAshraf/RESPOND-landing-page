@@ -1,13 +1,28 @@
-import { CustomPageTitleStrategy } from './app/services/custom-page-title.service';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { AppComponent } from './app/app.component';
-import { provideRouter, TitleStrategy } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  provideRouter,
+  TitleStrategy,
+  withInMemoryScrolling,
+  withRouterConfig,
+} from '@angular/router';
+import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
+import { CustomPageTitleStrategy } from './app/services/custom-page-title.service';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withRouterConfig({
+        onSameUrlNavigation: 'ignore',
+        paramsInheritanceStrategy: 'always',
+      }),
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'enabled',
+      })
+    ),
     provideAnimations(),
     {
       provide: TitleStrategy,
@@ -15,4 +30,3 @@ bootstrapApplication(AppComponent, {
     },
   ],
 }).catch((err) => console.error(err));
-

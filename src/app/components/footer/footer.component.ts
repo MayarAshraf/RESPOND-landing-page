@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
           <div class="col-12 md:col-4">
             <div class="footer-section">
               <a routerLink="/home"
-                ><img src="assets/images/logo.png" class="w-8rem"
+                ><img src="assets/images/white-bg-logo.png" class="w-8rem"
               /></a>
               <p>
                 Creating amazing software solutions with modern technologies and
@@ -89,11 +89,7 @@ import { RouterLink } from '@angular/router';
       .footer {
         background: #1a1a1a;
         color: #fff;
-        padding: 3rem 0 1rem;
-      }
-
-      .footer-section {
-        margin-bottom: 1rem;
+        padding: 2rem 0 1rem;
       }
 
       .footer-section h3 {
@@ -103,7 +99,6 @@ import { RouterLink } from '@angular/router';
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        margin-bottom: 1rem;
       }
 
       .footer-section h4 {
@@ -176,9 +171,8 @@ import { RouterLink } from '@angular/router';
 
       .footer-bottom {
         text-align: center;
-        padding-top: 2rem;
+        padding-top: 1rem;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-top: 2rem;
       }
 
       .footer-bottom p {

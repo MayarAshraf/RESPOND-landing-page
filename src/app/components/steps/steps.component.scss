@@ -42,17 +42,6 @@
           position: relative;
           border: 2px solid transparent;
 
-          &:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 40px rgba(52, 117, 212, 0.15);
-            border-color: #3475d4;
-
-            .step-number-circle {
-              transform: scale(1.1);
-              background: linear-gradient(135deg, #3475d4 0%, #5b9aef 100%);
-            }
-          }
-
           .step-number-circle {
             width: 60px;
             height: 60px;
