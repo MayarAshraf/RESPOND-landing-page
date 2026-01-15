@@ -11,13 +11,12 @@ import { ButtonModule } from 'primeng/button';
       <div class="container">
         <div class="hero-content fade-in-up">
           <h1 class="hero-title">
-            Customers message. Teams handle replies. Conversations get messy.
-            Can you manage it all?
+            Every conversation. Routed. Assigned. Handled.
           </h1>
           <p class="hero-description">
-            Manage WhatsApp conversations, automate replies, route customers to
-            the right agent, and scale your support. All from one smart
-            dashboard.
+            8X RESPOND helps teams manage business conversations by
+            automatically routing each chat to the right team and the available
+            agent.
           </p>
           <div class="hero-buttons">
             <button
@@ -117,7 +116,7 @@ import { ButtonModule } from 'primeng/button';
       }
 
       .hero-title {
-        font-size: 2.4rem;
+        font-size: 3rem;
         font-weight: 700;
         color: white;
         margin-bottom: 1rem;
