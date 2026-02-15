@@ -17,29 +17,29 @@ interface WorkflowStep {
       <div class="container">
         <!-- Section Header -->
         <div class="section-title">
-          <h2>How 8X RESPOND works</h2>
+          <h2>How 8X RESPOND Works</h2>
         </div>
 
         <!-- Desktop View - Grid Layout -->
         <div class="desktop-view">
           <div class="steps-grid">
-            @for (step of steps; track $index ) {
-            <div class="step-item">
-              <div class="step-card">
-                <!-- Step Number Circle -->
-                <div class="step-number-circle">
-                  <span>{{ step.step }}</span>
-                </div>
+            @for (step of steps; track $index) {
+              <div class="step-item">
+                <div class="step-card">
+                  <!-- Step Number Circle -->
+                  <div class="step-number-circle">
+                    <span>{{ step.step }}</span>
+                  </div>
 
-                <!-- Step Content -->
-                <div class="step-content">
-                  <h3 class="step-title text-center">
-                    {{ step.title }}
-                  </h3>
-                  <p class="step-description">{{ step.description }}</p>
+                  <!-- Step Content -->
+                  <div class="step-content">
+                    <h3 class="step-title text-center">
+                      {{ step.title }}
+                    </h3>
+                    <p class="step-description">{{ step.description }}</p>
+                  </div>
                 </div>
               </div>
-            </div>
             }
           </div>
         </div>
@@ -49,11 +49,8 @@ interface WorkflowStep {
           <p-timeline [value]="steps" align="alternate">
             <ng-template pTemplate="content" let-step>
               <div class="timeline-card">
-                <div class="timeline-step-number">
+                <div class="timeline-step-number hidden md:block">
                   <span>{{ step.step }}</span>
-                </div>
-                <div class="timeline-icon">
-                  <i [class]="step.icon"></i>
                 </div>
                 <h3 class="timeline-title">{{ step.title }}</h3>
                 <p class="timeline-description">{{ step.description }}</p>
@@ -61,7 +58,7 @@ interface WorkflowStep {
             </ng-template>
             <ng-template pTemplate="marker" let-step>
               <div class="custom-marker">
-                <i [class]="step.icon"></i>
+                <span class="text-white font-semibold">{{ step.step }}</span>
               </div>
             </ng-template>
           </p-timeline>

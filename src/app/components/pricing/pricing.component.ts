@@ -1,11 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { map } from 'rxjs';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-pricing',
-  imports: [CommonModule, CardModule, ButtonModule],
+  imports: [CardModule, ButtonModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section id="pricing" class="pricing">
@@ -15,56 +23,51 @@ import { CardModule } from 'primeng/card';
           <p>Choose the perfect plan for your needs</p>
         </div>
         <div class="grid">
-          @for (plan of pricingPlans(); track plan.name) {
-          <div class="col-12 md:col-6 lg:col-4">
-            <div class="card h-full flex flex-column justify-content-between">
-              <div
-                class="pricing-header"
-                [class]="
-                  plan.name === 'Professional' ? 'bg-pro -mt-4' : 'bg-main'
-                "
-              >
+          @for (package of packages(); track package.id) {
+            <div class="col-12 md:col-6 lg:col-4">
+              <div class="card h-full flex flex-column justify-content-between">
                 <div
-                  class="text-2xl"
-                  [class]="plan.name === 'Professional' ? 'p-3' : 'p-1'"
+                  class="pricing-header"
+                  [class]="package.is_featured ? 'bg-pro -mt-4' : 'bg-main'"
                 >
-                  {{ plan.name }}
+                  <div
+                    class="text-2xl"
+                    [class]="package.is_featured ? 'p-3' : 'p-1'"
+                  >
+                    {{ package.name_en }}
+                  </div>
+                  <div
+                    class="pricing-price text-5xl font-meduim"
+                    [class]="package.is_featured ? 'bg-pro-400' : 'bg-main-400'"
+                  >
+                    <span class="currency">$</span>
+                    <span class="amount">{{ package.price }}</span>
+                  </div>
+                  <div class="text-xl p-2">{{ package.description }}</div>
+                </div>
+                <div class="pricing-features">
+                  <ul class="pricing-list m-0 p-0 list-none text-center">
+                    @for (feature of package.features; track feature) {
+                      <li>
+                        {{ feature }}
+                      </li>
+                    }
+                  </ul>
                 </div>
                 <div
-                  class="pricing-price text-5xl font-meduim"
-                  [class]="
-                    plan.name === 'Professional' ? 'bg-pro-400' : 'bg-main-400'
-                  "
+                  class="text-center p-4 mt-auto"
+                  [class]="package.is_featured ? 'bg-pro' : 'bg-main'"
                 >
-                  <span class="currency">$</span>
-                  <span class="amount">{{ plan.price }}</span>
+                  <button
+                    pButton
+                    label="Subscribe"
+                    class="p-3 text-white uppercase border-round-sm border-none"
+                    [class]="package.is_featured ? 'bg-pro-400' : 'bg-main-400'"
+                    routerLink="/registeration/{{ package.id }}"
+                  ></button>
                 </div>
-                <div class="text-xl p-2">{{ plan.description }}</div>
-              </div>
-              <div class="pricing-features">
-                <ul class="pricing-list m-0 p-0 list-none text-center">
-                  @for (feature of plan.features; track feature) {
-                  <li>
-                    {{ feature }}
-                  </li>
-                  }
-                </ul>
-              </div>
-              <div
-                class="text-center p-4 mt-auto"
-                [class]="plan.name === 'Professional' ? 'bg-pro' : 'bg-main'"
-              >
-                <button
-                  pButton
-                  [label]="plan.buttonText"
-                  class="p-3 text-white uppercase border-round-sm"
-                  [class]="
-                    plan.name === 'Professional' ? 'bg-pro-400' : 'bg-main-400'
-                  "
-                ></button>
               </div>
             </div>
-          </div>
           }
         </div>
       </div>
@@ -125,53 +128,13 @@ import { CardModule } from 'primeng/card';
   ],
 })
 export class PricingComponent {
-  pricingPlans = signal([
-    {
-      name: 'Starter',
-      price: '29',
-      description: 'Perfect for small projects',
-      features: [
-        'Up to 5 pages',
-        'Responsive design',
-        'Basic support',
-        '1 month free updates',
-        'Email support',
-      ],
-      buttonText: 'Get Started',
-      featured: false,
-    },
-    {
-      name: 'Professional',
-      price: '79',
-      description: 'Best for growing businesses',
-      features: [
-        'Unlimited pages',
-        'Premium design',
-        'Priority support',
-        '6 months free updates',
-        'Email & phone support',
-        'Custom features',
-        'SEO optimization',
-      ],
-      buttonText: 'Get Started',
-      featured: true,
-    },
-    {
-      name: 'Enterprise',
-      price: '199',
-      description: 'For large organizations',
-      features: [
-        'Unlimited everything',
-        'Custom design',
-        '24/7 support',
-        'Lifetime updates',
-        'Dedicated manager',
-        'Advanced features',
-        'Performance optimization',
-        'Security audit',
-      ],
-      buttonText: 'Contact Us',
-      featured: false,
-    },
-  ]);
+  #api = inject(ApiService);
+
+  packages$ = this.#api
+    .request('post', 'package/paginated-package')
+    .pipe(map(({ data }) => data.data));
+
+  packages = toSignal(this.packages$, {
+    initialValue: null,
+  });
 }

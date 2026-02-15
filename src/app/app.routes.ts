@@ -12,6 +12,12 @@ export const routes: Routes = [
         title: 'Home',
       },
       {
+        path: 'registeration/:packageId',
+        loadComponent: () =>
+          import('./components/registeration-form/registeration-form'),
+        title: 'Registeration',
+      },
+      {
         path: 'policy',
         loadComponent: () => import('./components/policy/policy'),
         title: 'Privacy Policy',

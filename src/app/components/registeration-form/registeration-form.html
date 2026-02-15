@@ -1,0 +1,339 @@
+<p-toast />
+<section id="register" class="register py-7">
+  <div class="container">
+    <div class="section-title mb-7">
+      <h2>Register Form</h2>
+      <p>Choose the perfect plan for your needs</p>
+    </div>
+    <div class="grid">
+      <div class="col-12">
+        <p-stepper [(value)]="activeStep" class="basis-[40rem]">
+          <p-step-list>
+            <p-step [value]="1">
+              <ng-template
+                #content
+                let-activateCallback="activateCallback"
+                let-value="value"
+              >
+                <button
+                  pButton
+                  type="button"
+                  class="step-btn bg-transparent border-0 shadow-0"
+                  (click)="activateCallback()"
+                  icon="pi pi-user text-xl text-white"
+                ></button>
+              </ng-template>
+            </p-step>
+            <p-step [value]="2">
+              <ng-template
+                #content
+                let-activateCallback="activateCallback"
+                let-value="value"
+              >
+                <button
+                  pButton
+                  type="button"
+                  class="step-btn bg-transparent border-0 shadow-0"
+                  (click)="activateCallback()"
+                  icon="pi pi-star text-xl text-white"
+                  [disabled]="!canProceedToStep2"
+                ></button>
+              </ng-template>
+            </p-step>
+            <p-step [value]="3">
+              <ng-template
+                #content
+                let-activateCallback="activateCallback"
+                let-value="value"
+              >
+                <button
+                  pButton
+                  type="button"
+                  class="step-btn bg-transparent border-0 shadow-0"
+                  (click)="activateCallback()"
+                  icon="pi pi-id-card text-xl text-white"
+                  [disabled]="true"
+                ></button>
+              </ng-template>
+            </p-step>
+          </p-step-list>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <p-step-panels>
+              <p-step-panel [value]="1">
+                <ng-template #content>
+                  <div class="text-center mb-5 text-4xl font-medium">
+                    Create your account
+                  </div>
+                  <div class="grid">
+                    <div class="col-12 md:col-6">
+                      <input
+                        id="first_name"
+                        pInputText
+                        formControlName="first_name"
+                        placeholder="First Name"
+                        class="w-full"
+                        [class.ng-invalid]="isInvalid('first_name')"
+                        [class.ng-dirty]="isInvalid('first_name')"
+                      />
+                      @if (isInvalid("first_name")) {
+                      <small class="error">
+                        {{ getErrorMessage("first_name") }}
+                      </small>
+                      }
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                      <input
+                        id="last_name"
+                        pInputText
+                        formControlName="last_name"
+                        placeholder="Last Name"
+                        class="w-full"
+                        [class.ng-invalid]="isInvalid('last_name')"
+                        [class.ng-dirty]="isInvalid('last_name')"
+                      />
+                      @if (isInvalid("last_name")) {
+                      <small class="error">
+                        {{ getErrorMessage("last_name") }}
+                      </small>
+                      }
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                      <input
+                        id="email"
+                        pInputText
+                        formControlName="email"
+                        type="email"
+                        placeholder="email@example.com"
+                        class="w-full"
+                        [class.ng-invalid]="isInvalid('email')"
+                        [class.ng-dirty]="isInvalid('email')"
+                      />
+                      @if (isInvalid("email")) {
+                      <small class="error">
+                        {{ getErrorMessage("email") }}
+                      </small>
+                      }
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                      <p-inputGroup>
+                        <p-inputGroupAddon>
+                          <p-select
+                            [options]="countryCodes$ | async"
+                            formControlName="country_code"
+                            [filter]="true"
+                            appendTo="body"
+                            placeholder="Code"
+                            [showClear]="false"
+                            styleClass="w-full"
+                          />
+                        </p-inputGroupAddon>
+                        <input
+                          id="phone"
+                          pInputText
+                          pKeyFilter="int"
+                          formControlName="phone"
+                          placeholder="Phone Number"
+                          class="w-full"
+                          [class.ng-invalid]="isInvalid('phone')"
+                          [class.ng-dirty]="isInvalid('phone')"
+                        />
+                      </p-inputGroup>
+                      @if (isInvalid("phone") || isInvalid("country_code")) {
+                      <small class="error">
+                        Phone number and country code are required
+                      </small>
+                      }
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                      <p-password
+                        id="password"
+                        formControlName="password"
+                        placeholder="Password"
+                        [feedback]="true"
+                        [toggleMask]="true"
+                        styleClass="w-full"
+                        inputStyleClass="w-full"
+                        [class.ng-invalid]="isInvalid('password')"
+                        [class.ng-dirty]="isInvalid('password')"
+                      />
+                      @if (isInvalid('password')) {
+                      <small class="error">
+                        {{ getErrorMessage("password") }}
+                      </small>
+                      }
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                      <p-password
+                        id="password_confirmation"
+                        formControlName="password_confirmation"
+                        placeholder="Confirm Password"
+                        [feedback]="false"
+                        [toggleMask]="true"
+                        styleClass="w-full"
+                        inputStyleClass="w-full"
+                        [class.ng-invalid]="
+                          isInvalid('password_confirmation') ||
+                          form.errors?.['passwordMismatch']
+                        "
+                        [class.ng-dirty]="
+                          isInvalid('password_confirmation') ||
+                          form.errors?.['passwordMismatch']
+                        "
+                      />
+                      @if (contactFormControl['password_confirmation'].touched
+                      && form.errors?.['passwordMismatch']) {
+                      <small class="error"> Passwords do not match </small>
+                      }
+                    </div>
+
+                    <div class="col-12 md:col-6">
+                      <input
+                        id="company_name"
+                        pInputText
+                        formControlName="company_name"
+                        placeholder="Company Name"
+                        class="w-full"
+                        [class.ng-invalid]="isInvalid('company_name')"
+                        [class.ng-dirty]="isInvalid('company_name')"
+                      />
+                      @if (isInvalid("company_name")) {
+                      <small class="error">
+                        {{ getErrorMessage("company_name") }}
+                      </small>
+                      }
+                    </div>
+                  </div>
+                  <div class="flex mt-5 justify-content-end">
+                    <p-button
+                      type="button"
+                      (onClick)="goToStep2()"
+                      label="Next"
+                      icon="pi pi-arrow-right"
+                      iconPos="right"
+                    />
+                  </div>
+                </ng-template>
+              </p-step-panel>
+
+              <p-step-panel [value]="2">
+                <ng-template #content>
+                  <div class="text-center mb-5 text-4xl font-medium">
+                    Choose your domain
+                  </div>
+                  <div class="grid">
+                    <div class="col-12 md:col-6">
+                      <p-inputGroup>
+                        <input
+                          id="subdomain"
+                          pInputText
+                          formControlName="subdomain"
+                          placeholder="Your-domain"
+                          class="w-full"
+                          [class.ng-invalid]="isInvalid('subdomain')"
+                          [class.ng-dirty]="isInvalid('subdomain')"
+                        />
+                        <p-inputGroupAddon>
+                          <div class="flex align-items-center gap-1">
+                            @if (checkingDomain()) {
+                            <i class="pi pi-spin pi-spinner"></i>
+                            } @else if (domainAvailable() === true) {
+                            <i class="pi pi-check text-green-500"></i>
+                            } @else if (domainAvailable() === false) {
+                            <i class="pi pi-times error"></i>
+                            } <span>8xrespond.com</span>
+                          </div>
+                        </p-inputGroupAddon>
+                      </p-inputGroup>
+
+                      @if (checkingDomain()) {
+                      <p-message
+                        severity="info"
+                        text="Checking domain availability..."
+                        styleClass="mt-2 w-full"
+                      />
+                      } @else if (domainAvailable() === true) {
+                      <p-message
+                        severity="success"
+                        text="Domain is available!"
+                        styleClass="mt-2 w-full"
+                      />
+                      } @else if (domainAvailable() === false &&
+                      domainSuggestions().length > 0) {
+                      <div class="mt-2">
+                        <p-message
+                          severity="warn"
+                          text="Domain not available. Try these suggestions:"
+                          styleClass="w-full"
+                        />
+                        <div class="flex gap-2 flex-wrap mt-2">
+                          @for (suggestion of domainSuggestions(); track
+                          suggestion.subdomain) {
+                          <p-button
+                            type="button"
+                            [label]="suggestion.subdomain"
+                            severity="secondary"
+                            [outlined]="true"
+                            size="small"
+                            (onClick)="selectSuggestion(suggestion)"
+                          />
+                          }
+                        </div>
+                      </div>
+                      } @if (isInvalid("subdomain")) {
+                      <small class="error">
+                        {{ getErrorMessage("subdomain") }}
+                      </small>
+                      }
+                    </div>
+                  </div>
+                  <div class="flex pt-5 justify-content-between">
+                    <p-button
+                      type="button"
+                      (onClick)="activeStep.set(1)"
+                      label="Back"
+                      severity="secondary"
+                      icon="pi pi-arrow-left"
+                    />
+                    <p-button
+                      type="submit"
+                      label="Create Account"
+                      icon="pi pi-check"
+                      iconPos="right"
+                      [loading]="loading()"
+                      [disabled]="domainAvailable() !== true"
+                    />
+                  </div>
+                </ng-template>
+              </p-step-panel>
+
+              <p-step-panel [value]="3">
+                <ng-template #content>
+                  <div class="text-center">
+                    <div class="mb-4 text-4xl font-medium text-green-600">
+                      <i class="pi pi-check-circle text-6xl mb-3"></i>
+                      <div>Account Created Successfully!</div>
+                    </div>
+                    <p class="text-xl mb-4">
+                      Welcome to our platform! Your account has been created.
+                    </p>
+                    <p-button
+                      label="Go to Dashboard"
+                      icon="pi pi-home"
+                      severity="success"
+                      [raised]="true"
+                    />
+                  </div>
+                </ng-template>
+              </p-step-panel>
+            </p-step-panels>
+          </form>
+        </p-stepper>
+      </div>
+    </div>
+  </div>
+</section>

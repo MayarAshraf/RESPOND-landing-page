@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormBuilder,
   FormGroup,
@@ -7,8 +15,13 @@ import {
 } from '@angular/forms';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputText } from 'primeng/inputtext';
+import { SelectModule } from 'primeng/select';
+import { Textarea } from 'primeng/textarea';
+import { finalize, map, tap } from 'rxjs';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-faqs',
@@ -16,8 +29,12 @@ import { TextareaModule } from 'primeng/textarea';
     AccordionModule,
     ButtonModule,
     ReactiveFormsModule,
-    TextareaModule,
-    InputTextModule,
+    Textarea,
+    InputText,
+    InputGroupModule,
+    InputGroupAddonModule,
+    SelectModule,
+    AsyncPipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -38,12 +55,12 @@ import { TextareaModule } from 'primeng/textarea';
               class="faqs-accordion"
             >
               @for (tab of tabs; track tab.title) {
-              <p-accordion-panel [value]="tab.value">
-                <p-accordion-header>{{ tab.title }}</p-accordion-header>
-                <p-accordion-content>
-                  <p class="m-0">{{ tab.content }}</p>
-                </p-accordion-content>
-              </p-accordion-panel>
+                <p-accordion-panel [value]="tab.value">
+                  <p-accordion-header>{{ tab.title }}</p-accordion-header>
+                  <p-accordion-content>
+                    <p class="m-0">{{ tab.content }}</p>
+                  </p-accordion-content>
+                </p-accordion-panel>
               }
             </p-accordion>
             <div class="contact mt-1">
@@ -94,7 +111,6 @@ import { TextareaModule } from 'primeng/textarea';
                   class="w-full"
                 />
               </div>
-
               <div class="field mb-3">
                 <input
                   type="email"
@@ -104,7 +120,36 @@ import { TextareaModule } from 'primeng/textarea';
                   class="w-full"
                 />
               </div>
-
+              <div class="field mb-3">
+                <input
+                  type="text"
+                  pInputText
+                  formControlName="subject"
+                  placeholder="Subject"
+                  class="w-full"
+                />
+              </div>
+              <div class="field mb-3">
+                <p-inputGroup>
+                  <p-inputGroupAddon>
+                    <p-select
+                      [options]="countryCodes$ | async"
+                      formControlName="country_code"
+                      [filter]="true"
+                      appendTo="body"
+                      placeholder="Country Code"
+                    />
+                  </p-inputGroupAddon>
+                  <input
+                    pInputText
+                    pKeyFilter="int"
+                    formControlName="phone"
+                    placeholder="Phone Number"
+                    class="w-full"
+                    [class]="{ 'ng-dirty': contactForm.get('phone')?.touched }"
+                  />
+                </p-inputGroup>
+              </div>
               <div class="field mb-3">
                 <textarea
                   pInputTextarea
@@ -122,6 +167,7 @@ import { TextareaModule } from 'primeng/textarea';
                   type="submit"
                   label="Send"
                   class="btn-primary w-full p-button-lg"
+                  [loading]="loading()"
                   [disabled]="!contactForm.valid"
                 ></button>
               </div>
@@ -134,6 +180,10 @@ import { TextareaModule } from 'primeng/textarea';
   styleUrl: './faqs.component.scss',
 })
 export class FaqsComponent {
+  #fb = inject(FormBuilder);
+  #api = inject(ApiService);
+  #destroyRef = inject(DestroyRef);
+
   tabs = [
     {
       title: 'Is 8X RESPOND only for customer support?',
@@ -158,22 +208,48 @@ export class FaqsComponent {
     },
   ];
 
-  contactForm: FormGroup;
+  loading = signal(false);
+  contactForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.contactForm = this.fb.group({
+  ngOnInit() {
+    this.contactForm = this.#fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
-      message: ['', [Validators.required, Validators.minLength(10)]],
+      subject: ['', []],
+      country_code: ['eg', [Validators.required]],
+      phone: [null, [Validators.required]],
+      message: ['', [Validators.required]],
     });
   }
 
+  countryCodes$ = this.#api.request('get', 'countries/dial-codes').pipe(
+    map(({ data }) =>
+      data.map((item: any) => ({
+        label: item.label,
+        value: item.value,
+      })),
+    ),
+  );
+
   onSubmit() {
-    if (this.contactForm.valid) {
-      console.log('Form submitted:', this.contactForm.value);
-      // Handle form submission here
-      // You can add your API call or further processing
-      this.contactForm.reset();
+    if (!this.contactForm.valid) {
+      this.contactForm.markAllAsTouched();
+      this.contactForm.updateValueAndValidity();
+      return;
     }
+    this.loading.set(true);
+
+    this.#api
+      .request('post', 'contact-us', this.contactForm.value)
+      .pipe(
+        tap(() => {
+          this.contactForm.reset();
+        }),
+        finalize(() => {
+          this.loading.set(false);
+        }),
+        takeUntilDestroyed(this.#destroyRef),
+      )
+      .subscribe();
   }
 }

@@ -43,7 +43,7 @@ import { ButtonModule } from 'primeng/button';
         min-height: 100vh;
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: center;
         padding-top: 80px;
         overflow: hidden;
         background-image: url('/assets/images/hero.png');
@@ -110,9 +110,7 @@ import { ButtonModule } from 'primeng/button';
 
       .hero-content {
         max-width: 900px;
-        padding: 2rem;
         color: white;
-        padding-top: 70px;
       }
 
       .hero-title {
@@ -150,6 +148,12 @@ import { ButtonModule } from 'primeng/button';
       }
 
       @media (max-width: 768px) {
+        .hero {
+          min-height: 60vh;
+          background-size: 100% 100%;
+          padding-top: 100px;
+        }
+
         .hero-title {
           font-size: 2rem;
         }
