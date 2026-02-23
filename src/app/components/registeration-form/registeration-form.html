@@ -62,7 +62,7 @@
               <p-step-panel [value]="1">
                 <ng-template #content>
                   <div class="text-center mb-5 text-4xl font-medium">
-                    Create your account
+                    Create your domain
                   </div>
                   <div class="grid">
                     <div class="col-12 md:col-6">
@@ -301,7 +301,7 @@
                     />
                     <p-button
                       type="submit"
-                      label="Create Account"
+                      label="Create Domain"
                       icon="pi pi-check"
                       iconPos="right"
                       [loading]="loading()"
@@ -316,17 +316,12 @@
                   <div class="text-center">
                     <div class="mb-4 text-4xl font-medium text-green-600">
                       <i class="pi pi-check-circle text-6xl mb-3"></i>
-                      <div>Account Created Successfully!</div>
+                      <div>Domain Created Successfully!</div>
                     </div>
                     <p class="text-xl mb-4">
-                      Welcome to our platform! Your account has been created.
+                      Welcome to our platform! We will redirect to your
+                      dashboard...
                     </p>
-                    <p-button
-                      label="Go to Dashboard"
-                      icon="pi pi-home"
-                      severity="success"
-                      [raised]="true"
-                    />
                   </div>
                 </ng-template>
               </p-step-panel>

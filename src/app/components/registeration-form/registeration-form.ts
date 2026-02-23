@@ -256,8 +256,12 @@ export default class RegisterationForm {
         takeUntilDestroyed(this.#destroyRef),
       )
       .subscribe({
-        next: () => {
+        next: ({ data }) => {
           this.activeStep.set(3);
+          const { tenant_url, uuid } = data;
+          setTimeout(() => {
+            window.location.href = `${tenant_url}/private-access/${uuid}`;
+          }, 2000);
         },
         error: (error) => {
           const errors = error.error.errors;
