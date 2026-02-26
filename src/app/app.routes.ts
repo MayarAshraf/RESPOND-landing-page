@@ -24,11 +24,11 @@ export const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'blog',
-    loadComponent: () => import('./layout/blog-layout/blog-layout'),
-    title: 'Blog',
-  },
+  // {
+  //   path: 'blog',
+  //   loadComponent: () => import('./layout/blog-layout/blog-layout'),
+  //   title: 'Blog',
+  // },
   {
     path: '**',
     loadComponent: () => import('./errors/not-found/not-found'),

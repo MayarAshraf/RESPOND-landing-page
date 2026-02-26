@@ -26,9 +26,9 @@ import { RouterLink } from '@angular/router';
               </p>
               <div class="social-links">
                 @for (social of socialLinks(); track social.name) {
-                <a [href]="social.link" [title]="social.name" target="_blank">
-                  <i [class]="social.icon"></i>
-                </a>
+                  <a [href]="social.link" [title]="social.name" target="_blank">
+                    <i [class]="social.icon"></i>
+                  </a>
                 }
               </div>
             </div>
@@ -43,9 +43,9 @@ import { RouterLink } from '@angular/router';
                     >Pricing</a
                   >
                 </li>
-                <li>
+                <!-- <li>
                   <a routerLink="/blog">Blog</a>
-                </li>
+                </li> -->
                 <li><a routerLink="/policy">Privacy Policy</a></li>
               </ul>
             </div>

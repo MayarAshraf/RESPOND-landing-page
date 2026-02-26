@@ -30,7 +30,7 @@ import { ButtonModule } from 'primeng/button';
               >Features</a
             >
             <a class="cursor-pointer" (click)="scrollTo('pricing')">Pricing</a>
-            <a class="cursor-pointer" routerLink="/blog">Blog</a>
+            <!-- <a class="cursor-pointer" routerLink="/blog">Blog</a> -->
             <a class="cursor-pointer" (click)="scrollTo('contact')">Contact</a>
           </nav>
           <button
