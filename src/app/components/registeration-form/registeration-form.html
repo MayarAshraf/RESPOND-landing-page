@@ -52,7 +52,7 @@
                   class="step-btn bg-transparent border-0 shadow-0"
                   (click)="activateCallback()"
                   icon="pi pi-id-card text-xl text-white"
-                  [disabled]="true"
+                  [disabled]="activeStep() !== 3"
                 ></button>
               </ng-template>
             </p-step>
